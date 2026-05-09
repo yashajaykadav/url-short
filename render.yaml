@@ -1,11 +1,11 @@
 services:
   - type: web
     name: url-shortener
-    runtime: image
+    runtime: docker
     repo: https://github.com/yashajaykadav/url-shortner
     plan: free
-    dockerContext: .
     dockerfilePath: ./Dockerfile
+    dockerContext: .
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: render
@@ -40,11 +40,9 @@ services:
     name: url-shortener-redis
     plan: free
     maxmemoryPolicy: noeviction
-    ipAllowList: []
 
 databases:
   - name: url-shortener-db
     plan: free
     databaseName: urlshortener
     user: yash
-    ipAllowList: []
