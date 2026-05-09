@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: url-shortener
+    runtime: docker
+    repo: https://github.com/yashajaykadav/url-shortner
+    plan: free
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: url-shortener-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: url-shortener-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: url-shortener-db
+          property: password
+      - key: SPRING_REDIS_HOST
+        fromService:
+          name: url-shortener-redis
+          type: redis
+          property: host
+      - key: SPRING_REDIS_PORT
+        fromService:
+          name: url-shortener-redis
+          type: redis
+          property: port
+
+  - type: redis
+    name: url-shortener-redis
+    plan: free
+    maxmemoryPolicy: noeviction
+    ipAllowList: []  # Allow all connections (for free tier)
+
+databases:
+  - name: url-shortener-db
+    plan: free
+    databaseName: urlshortener
+    user: yash
+    ipAllowList: []  # Allow all connections
