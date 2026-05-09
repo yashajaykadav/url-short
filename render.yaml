@@ -1,7 +1,7 @@
 services:
   - type: web
     name: url-shortener
-    runtime: docker
+    runtime: image
     repo: https://github.com/yashajaykadav/url-shortner
     plan: free
     dockerContext: .
@@ -40,11 +40,11 @@ services:
     name: url-shortener-redis
     plan: free
     maxmemoryPolicy: noeviction
-    ipAllowList: []  # Allow all connections (for free tier)
+    ipAllowList: []
 
 databases:
   - name: url-shortener-db
     plan: free
     databaseName: urlshortener
     user: yash
-    ipAllowList: []  # Allow all connections
+    ipAllowList: []

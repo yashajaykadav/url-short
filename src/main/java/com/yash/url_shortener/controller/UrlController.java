@@ -102,4 +102,12 @@ public class UrlController {
         response.put("timestamp", LocalDateTime.now());
         return response;
     }
+    @GetMapping("/health")
+    public Map<String, String> health() {
+        Map<String, String> status = new HashMap<>();
+        status.put("status", "UP");
+        status.put("timestamp", LocalDateTime.now().toString());
+        return status;
+    }
+
 }
